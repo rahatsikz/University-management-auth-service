@@ -6,8 +6,9 @@
   "scripts": {
     "start": "tsnd --respawn src/server.ts",
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
-    "lintfix": "npm run lint -- --fix",
+    "lintfix": "npm run lint . -- --fix",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
+    "prettier-fix": "prettier --write .",
     "lint-prettier": "npm run lint && npm run format",
     "lint-staged": "lint-staged",
     "test": "echo \"Error: no test specified\" && exit 1",
