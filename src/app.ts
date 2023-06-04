@@ -1,6 +1,8 @@
-import express, { Application, Request, Response } from 'express'
+import express, { Application } from 'express'
 import cors from 'cors'
-import userRoute from '../src/app/modules/users/users.router'
+import globalErrorHandler from './app/middleware/globalErrorHandler'
+import { UserRoutes } from './app/modules/users/user.router'
+// import ApiError from './errors/ApiError'
 const app: Application = express()
 
 app.use(cors())
@@ -10,11 +12,19 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 // route
-app.use('/api/v1/users', userRoute)
+app.use('/api/v1/users', UserRoutes)
+// eslint-disable-next-line no-console
+console.log(app.get('env'))
 
 // test
-app.get('/', async (req: Request, res: Response) => {
-  res.send('working successfully')
+app.get('/', async () => {
+  // throw new ApiError(400, 'Error Ashse')
+  // next('error ashse')
+  // Promise.reject(new Error('Unhandled Promise Rejection'))
+  // console.log(x)
 })
+
+// global error handler
+app.use(globalErrorHandler)
 
 export default app

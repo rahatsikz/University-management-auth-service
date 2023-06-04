@@ -1,7 +1,11 @@
 {
   "env": {
     "browser": true,
-    "es2021": true
+    "es2021": true,
+    "node": true
+  },
+  "globals": {
+    "process": "readonly"
   },
   "extends": [
     "eslint:recommended",
@@ -18,7 +22,7 @@
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
     "no-unused-vars": "error",
-    "no-console": "error",
+    "no-console": "warn",
     "no-undef": "error",
     "no-unreachable": "error",
     "no-unused-expressions": "error",
