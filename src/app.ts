@@ -22,6 +22,7 @@ app.get('/', async () => {
   // next('error ashse')
   // Promise.reject(new Error('Unhandled Promise Rejection'))
   // console.log(x)
+  throw new Error('Uncaught exception detected')
 })
 
 // global error handler
