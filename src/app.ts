@@ -1,7 +1,7 @@
 import express, { Application } from 'express'
 import cors from 'cors'
 import globalErrorHandler from './app/middleware/globalErrorHandler'
-import { UserRoutes } from './app/modules/users/user.router'
+import { UserRoutes } from './app/modules/user/user.route'
 // import ApiError from './errors/ApiError'
 const app: Application = express()
 
@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true }))
 // route
 app.use('/api/v1/users', UserRoutes)
 // eslint-disable-next-line no-console
-console.log(app.get('env'))
+// console.log(app.get('env'))
 
 // test
 app.get('/', async () => {
