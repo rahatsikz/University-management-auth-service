@@ -77,7 +77,7 @@ const deleteFaculty = catchAsync(async (req: Request, res: Response) => {
   sendResponse<IAcademicFaculty>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'semester deleted successfully',
+    message: 'Academy Faculty deleted successfully',
     data: result,
   })
 })
