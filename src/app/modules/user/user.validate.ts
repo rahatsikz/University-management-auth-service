@@ -101,9 +101,46 @@ const createFacultyZodSchema = z.object({
   }),
 })
 
+const createAdminZodSchema = z.object({
+  body: z.object({
+    password: z.string().optional(),
+    admin: z.object({
+      name: z.object({
+        firstName: z.string({ required_error: 'first name is required' }),
+        middleName: z.string().optional(),
+        lastName: z.string({ required_error: 'last name is required' }),
+      }),
+      gender: z.enum([...Gender] as [string, ...string[]], {
+        required_error: 'gender is required',
+      }),
+      dateOfBirth: z.string({ required_error: 'birth date is required' }),
+      email: z.string({ required_error: 'email is required' }).email(),
+      contactNo: z.string({ required_error: 'contact no is required' }),
+      emergencyContactNo: z.string({
+        required_error: 'emergency contact no is required',
+      }),
+      presentAddress: z.string({
+        required_error: 'presentAddress is required',
+      }),
+      permanentAddress: z.string({
+        required_error: 'permanentAddress is required',
+      }),
+      bloodGroup: z.enum([...BloodGroup] as [string, ...string[]], {
+        required_error: 'blood group is required',
+      }),
+      designation: z.string({ required_error: 'designation is required' }),
+      managementDepartment: z.string({
+        required_error: 'managementDepartment is required',
+      }),
+      profileImage: z.string().optional(),
+    }),
+  }),
+})
+
 export const UserValidate = {
   createUserZodSchema,
   createFacultyZodSchema,
+  createAdminZodSchema,
 }
 
 //   await createUserZodSchema.parseAsync(req)

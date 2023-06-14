@@ -42,3 +42,19 @@ export const generateFacultyID = async (): Promise<string> => {
 
   return incrementalID
 }
+
+export const findLastAdminID = async () => {
+  const lastAmdin = await User.findOne({ role: 'admin' }, { id: 1, _id: 0 })
+    .sort({ createdAt: -1 })
+    .lean()
+  return lastAmdin?.id && lastAmdin.id.substring(2)
+}
+
+export const generateAdminID = async (): Promise<string> => {
+  const currentID = (await findLastAdminID()) || (0).toString().padStart(5, '0')
+  let incrementalID = (parseInt(currentID) + 1).toString().padStart(5, '0')
+  incrementalID = `A-${incrementalID}`
+  // console.log(incrementalID)
+
+  return incrementalID
+}
