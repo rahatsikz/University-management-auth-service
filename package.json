@@ -4,7 +4,9 @@
   "description": "",
   "main": "src/server.ts",
   "scripts": {
-    "start": "tsnd --respawn src/server.ts",
+    "dev": "tsnd --respawn src/server.ts",
+    "start": "node dist/server,js",
+    "build": "tsc",
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
     "lintfix": "npm run lint . -- --fix",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",

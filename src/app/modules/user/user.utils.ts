@@ -27,7 +27,7 @@ export const generateStudentID = async (
 }
 
 export const findLastFacultyID = async () => {
-  const lastFaculty = await User.findOne({ role: 'Faculty' }, { id: 1, _id: 0 })
+  const lastFaculty = await User.findOne({ role: 'faculty' }, { id: 1, _id: 0 })
     .sort({ createdAt: -1 })
     .lean()
   return lastFaculty?.id && lastFaculty.id.substring(2)
