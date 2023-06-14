@@ -1,4 +1,4 @@
-"use strict";
+'use strict'
 /*
 
 Faculty:
@@ -20,4 +20,4 @@ designation (Professor, Lecturer)
 academicDepartment (Department of Computer Science  & Engineering) [reference]
 academicFacid ty ( Faculty of Science  and Engineering ) [reference]
  */
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, '__esModule', { value: true })
