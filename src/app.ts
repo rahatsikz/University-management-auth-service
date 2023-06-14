@@ -3,6 +3,7 @@ import cors from 'cors'
 import globalErrorHandler from './app/middleware/globalErrorHandler'
 import routes from './app/routes'
 import httpStatus from 'http-status'
+
 // import ApiError from './errors/ApiError'
 const app: Application = express()
 
@@ -40,4 +41,26 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next()
 })
 
+// const academicSemester: IAcademicSemester = {
+//   title: 'Summer',
+//   year: '2025',
+//   code: '02',
+//   startMonth: 'April',
+//   endMonth: 'July',
+// }
+
+// const testID = async (academicSemester: IAcademicSemester) => {
+//   const id = await generateStudentID(academicSemester)
+//   // console.log(id)
+//   return id
+// }
+
+// testID(academicSemester)
+
+// const testFacultyID = async () => {
+//   const id = await generateFacultyID()
+//   return id
+// }
+
+// testFacultyID()
 export default app

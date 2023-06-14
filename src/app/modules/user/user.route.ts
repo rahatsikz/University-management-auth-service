@@ -1,14 +1,24 @@
 import express from 'express'
 import { UserController } from './user.controller'
 import { UserValidate } from './user.validate'
-import { validateRequet } from '../../middleware/validateRequet'
+import { validateRequest } from '../../middleware/validateRequest'
 
 const router = express.Router()
 
 router.post(
-  '/create-user',
-  validateRequet(UserValidate.createUserZodSchema),
-  UserController.createUser
+  '/create-student',
+  validateRequest(UserValidate.createUserZodSchema),
+  UserController.createStudent
 )
+
+// create faculty
+
+router.post(
+  '/create-faculty',
+  validateRequest(UserValidate.createFacultyZodSchema),
+  UserController.createFaculty
+)
+
+// create admin
 
 export const UserRoutes = router

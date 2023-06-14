@@ -118,6 +118,18 @@ const updateSemester = async (
   id: string,
   payload: Partial<IAcademicSemester>
 ): Promise<IAcademicSemester | null> => {
+  const isExists = await AcademicSemester.findOne({
+    year: payload.year,
+    title: payload.title,
+  })
+
+  if (isExists) {
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      'Can not update as it is already in Database'
+    )
+  }
+
   if (
     payload.title &&
     payload.code &&
@@ -129,6 +141,7 @@ const updateSemester = async (
   const result = await AcademicSemester.findOneAndUpdate({ _id: id }, payload, {
     new: true,
   })
+
   return result
 }
 
