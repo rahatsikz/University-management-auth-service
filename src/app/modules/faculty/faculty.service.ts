@@ -1,4 +1,4 @@
-import { SortOrder } from 'mongoose'
+import mongoose, { SortOrder } from 'mongoose'
 import { paginationHelpers } from '../../../helpers/paginationHelpers'
 import { IPaginationResponse } from '../../../interfaces/common'
 import { IPaginationOption } from '../../../interfaces/pagination'
@@ -7,6 +7,7 @@ import { IFaculty, IFacultyFilters } from './faculty.interface'
 import { Faculty } from './faculty.model'
 import ApiError from '../../../errors/ApiError'
 import httpStatus from 'http-status'
+import { User } from '../user/user.model'
 
 const getAllFaculties = async (
   filters: IFacultyFilters,
@@ -85,18 +86,34 @@ const getSingleFaculty = async (id: string): Promise<IFaculty | null> => {
 }
 
 const deleteFaculty = async (id: string): Promise<IFaculty | null> => {
-  const result = await Faculty.findByIdAndDelete(id).populate([
-    {
-      path: 'academicSemester',
-    },
-    {
-      path: 'academicFaculty',
-    },
-    {
-      path: 'academicDepartment',
-    },
-  ])
-  return result
+  const isExist = await Faculty.findOne({ id })
+  if (!isExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Faculty not found')
+  }
+
+  const session = await mongoose.startSession()
+
+  try {
+    session.startTransaction()
+    const faculty = await Faculty.findOneAndDelete({ id }, { session })
+
+    if (!faculty) {
+      throw new ApiError(httpStatus.NOT_FOUND, 'failed to delete faculty')
+    }
+
+    // console.log(faculty)
+
+    await User.deleteOne({ id })
+
+    await session.commitTransaction()
+    await session.endSession()
+
+    return faculty
+  } catch (error) {
+    await session.abortTransaction()
+    await session.endSession()
+    throw error
+  }
 }
 
 const updateFaculty = async (

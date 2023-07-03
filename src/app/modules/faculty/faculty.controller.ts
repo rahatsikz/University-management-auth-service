@@ -34,7 +34,7 @@ const getSingleFaculty = catchAsync(async (req: Request, res: Response) => {
   sendResponse<IFaculty>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Student retrieved successfully',
+    message: 'Faculty retrieved successfully',
     data: result,
   })
 })
@@ -47,7 +47,7 @@ const deleteFaculty = catchAsync(async (req: Request, res: Response) => {
   sendResponse<IFaculty>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Student deleted successfully',
+    message: 'Faculty deleted successfully',
     data: result,
   })
 })
@@ -61,7 +61,7 @@ const updateFaculty = catchAsync(async (req: Request, res: Response) => {
   sendResponse<IFaculty>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Student updated successfully',
+    message: 'Faculty updated successfully',
     data: result,
   })
 })

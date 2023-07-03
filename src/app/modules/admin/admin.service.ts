@@ -1,4 +1,4 @@
-import { SortOrder } from 'mongoose'
+import mongoose, { SortOrder } from 'mongoose'
 import { paginationHelpers } from '../../../helpers/paginationHelpers'
 import { IPaginationResponse } from '../../../interfaces/common'
 import { IPaginationOption } from '../../../interfaces/pagination'
@@ -7,6 +7,7 @@ import { IAdmin, IAdminFilters } from './admin.interface'
 import { Admin } from './admin.model'
 import httpStatus from 'http-status'
 import ApiError from '../../../errors/ApiError'
+import { User } from '../user/user.model'
 
 const getAllAdmins = async (
   filters: IAdminFilters,
@@ -104,8 +105,40 @@ const updateAdmin = async (
   return result
 }
 
+const deleteAdmin = async (id: string): Promise<IAdmin | null> => {
+  const isExist = await Admin.findOne({ id })
+  if (!isExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Admin not found')
+  }
+
+  const session = await mongoose.startSession()
+
+  try {
+    session.startTransaction()
+    const admin = await Admin.findOneAndDelete({ id }, { session })
+
+    if (!admin) {
+      throw new ApiError(httpStatus.NOT_FOUND, 'failed to delete Admin')
+    }
+
+    // console.log(Admin)
+
+    await User.deleteOne({ id })
+
+    await session.commitTransaction()
+    await session.endSession()
+
+    return admin
+  } catch (error) {
+    await session.abortTransaction()
+    await session.endSession()
+    throw error
+  }
+}
+
 export const AdminService = {
   getAllAdmins,
   getSingleAdmin,
   updateAdmin,
+  deleteAdmin,
 }

@@ -1,24 +1,23 @@
 import mongoose from 'mongoose'
 import app from './app'
 import config from './config/index'
-import { logger, errorLogger } from './shared/logger'
 import { Server } from 'http'
 let server: Server
 
 process.on('uncaughtException', err => {
-  errorLogger.error(err)
+  console.error(err)
   process.exit(1)
 })
 
 async function mainFunc() {
   try {
     await mongoose.connect(config.database_url as string)
-    logger.info('Database connected')
+    console.log('Database connected')
     server = app.listen(config.port, () => {
-      logger.info(`Application is listening on port ${config.port}`)
+      console.log(`Application is listening on port ${config.port}`)
     })
   } catch (error) {
-    errorLogger.error('error found', error)
+    console.error('error found', error)
   }
 
   process.on('unhandledRejection', err => {
@@ -26,7 +25,7 @@ async function mainFunc() {
 
     if (server) {
       server.close(() => {
-        errorLogger.error(err)
+        console.error(err)
         process.exit(1)
       })
     } else {
@@ -38,7 +37,7 @@ async function mainFunc() {
 mainFunc()
 
 process.on('SIGTERM', () => {
-  logger.info('Sigterm is received')
+  console.log('Sigterm is received')
   if (server) {
     server.close()
   }
