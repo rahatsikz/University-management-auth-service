@@ -13,6 +13,8 @@ const createStudent = catchAsync(async (req: Request, res: Response) => {
   //   message: 'User Created successfully',
   //   data: result,
   // })
+  // console.log(req.cookies, 'cookie')
+
   sendResponse<IUser>(res, {
     statusCode: httpStatus.OK,
     success: true,

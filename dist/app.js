@@ -1,82 +1,43 @@
-'use strict'
-var __awaiter =
-  (this && this.__awaiter) ||
-  function (thisArg, _arguments, P, generator) {
-    function adopt(value) {
-      return value instanceof P
-        ? value
-        : new P(function (resolve) {
-            resolve(value)
-          })
-    }
-    return new (P || (P = Promise))(function (resolve, reject) {
-      function fulfilled(value) {
-        try {
-          step(generator.next(value))
-        } catch (e) {
-          reject(e)
-        }
-      }
-      function rejected(value) {
-        try {
-          step(generator['throw'](value))
-        } catch (e) {
-          reject(e)
-        }
-      }
-      function step(result) {
-        result.done
-          ? resolve(result.value)
-          : adopt(result.value).then(fulfilled, rejected)
-      }
-      step((generator = generator.apply(thisArg, _arguments || [])).next())
-    })
-  }
-var __importDefault =
-  (this && this.__importDefault) ||
-  function (mod) {
-    return mod && mod.__esModule ? mod : { default: mod }
-  }
-Object.defineProperty(exports, '__esModule', { value: true })
-const express_1 = __importDefault(require('express'))
-const cors_1 = __importDefault(require('cors'))
-const globalErrorHandler_1 = __importDefault(
-  require('./app/middleware/globalErrorHandler')
-)
-const routes_1 = __importDefault(require('./app/routes'))
-const http_status_1 = __importDefault(require('http-status'))
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const cors_1 = __importDefault(require("cors"));
+const globalErrorHandler_1 = __importDefault(require("./app/middleware/globalErrorHandler"));
+const routes_1 = __importDefault(require("./app/routes"));
+const http_status_1 = __importDefault(require("http-status"));
 // import ApiError from './errors/ApiError'
-const app = (0, express_1.default)()
-app.use((0, cors_1.default)())
+const app = (0, express_1.default)();
+app.use((0, cors_1.default)());
 // parser
-app.use(express_1.default.json())
-app.use(express_1.default.urlencoded({ extended: true }))
+app.use(express_1.default.json());
+app.use(express_1.default.urlencoded({ extended: true }));
 // route
-app.use('/api/v1', routes_1.default)
+app.use('/api/v1', routes_1.default);
 // app.use('/api/v1/users', UserRoutes)
 // app.use('/api/v1/academic-semesters', AcademicSemesterRoutes)
 // eslint-disable-next-line no-console
 // console.log(app.get('env'))
 // test
-app.get('/', () =>
-  __awaiter(void 0, void 0, void 0, function* () {
-    // throw new ApiError(400, 'Error Ashse')
-    // next('error ashse')
-    // Promise.reject(new Error('Unhandled Promise Rejection'))
-    // console.log(x)
-    throw new Error('Uncaught exception detected')
-  })
-)
+/* app.get('/', async () => {
+  // throw new ApiError(400, 'Error Ashse')
+  // next('error ashse')
+  // Promise.reject(new Error('Unhandled Promise Rejection'))
+  // console.log(x)
+  throw new Error('Uncaught exception detected')
+}) */
 // global error handler
-app.use(globalErrorHandler_1.default)
+app.use(globalErrorHandler_1.default);
 app.use((req, res, next) => {
-  res.status(http_status_1.default.NOT_FOUND).json({
-    success: false,
-    message: 'API not found',
-    errorMessages: [{ Path: req.originalUrl, message: 'API not found' }],
-  })
-  next()
-})
+    res.status(http_status_1.default.NOT_FOUND).json({
+        success: false,
+        message: 'API not found',
+        errorMessages: [{ Path: req.originalUrl, message: 'API not found' }],
+    });
+    next();
+});
 // const academicSemester: IAcademicSemester = {
 //   title: 'Summer',
 //   year: '2025',
@@ -95,4 +56,4 @@ app.use((req, res, next) => {
 //   return id
 // }
 // testFacultyID()
-exports.default = app
+exports.default = app;

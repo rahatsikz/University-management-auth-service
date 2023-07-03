@@ -11,6 +11,7 @@ router.patch(
   validateRequest(AdminValidate.updateAdminZodSchema),
   AdminController.updateAdmin
 )
+router.delete('/:id', AdminController.deleteAdmin)
 router.get('/', AdminController.getAllAdmins)
 
 export const AdminRoutes = router
